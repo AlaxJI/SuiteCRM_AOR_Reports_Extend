@@ -1,5 +1,9 @@
 <?php
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+
 require_once 'include/MVC/View/views/view.list.php';
 
 class AOR_ReportsViewList extends ViewList
@@ -63,6 +67,12 @@ class AOR_ReportsViewList extends ViewList
                 if (false !== strpos($commentString, " * @deleted ")) {
                     $result['deleted'] = trim(substr($commentString, 12));
                 }
+                if (false !== strpos($commentString, " * @module ")) {
+                    $result['report_module'] = trim(substr($commentString, 11));
+                }
+            }
+            if (!isset($result['report_module'])) {
+                $result['report_module'] = "";
             }
             if (!isset($result['id']) || !isset($result['name']) || !isset($result['deleted'])) {
                 $result = array();
@@ -92,8 +102,8 @@ class AOR_ReportsViewList extends ViewList
                 $needSave         = true;
             }
 
-            if ($reportBean->report_module != "Custom") {
-                $reportBean->report_module = "Custom";
+            if ($reportBean->report_module != $report["report_module"]) {
+                $reportBean->report_module = $report["report_module"];
                 $needSave                  = true;
             }
 

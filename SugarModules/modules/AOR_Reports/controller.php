@@ -10,7 +10,8 @@ class CustomAOR_ReportsController extends AOR_ReportsController
 {
     public function action_DetailView()
     {
-        if ($this->bean->report_module == "Custom") {
+        $dir = "custom/modules/AOR_Reports/reports/{$this->bean->id}";
+        if (is_dir($dir)) {
             $this->view = "custom";
         } else {
             $this->view = "detail";

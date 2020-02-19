@@ -1,5 +1,5 @@
 # Модуль расширения отчётов `AOR_Reports`.
-@version 1.0.0-SNAPSHOT
+@version 1.0.1-SNAPSHOT
 
 ## Описание
 Модуль позволяет создавать пользовательские (не стандартные) отчёты. Для этого в модуле заложены некоторые инструменты.
@@ -28,7 +28,7 @@ class <ReportName> extends ICustomReport
     {
       // Здесь код формирования отчёта и заполнения поля `results`
     }
-}  
+}
 
 ```
 
@@ -213,7 +213,7 @@ class <ReportName> extends ICustomReport
 
     ICustomReport::export($format)
 
-Экспорт отчёта. 
+Экспорт отчёта.
 
 `$format` может принимать следующие значения: `csv`
 

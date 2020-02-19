@@ -71,9 +71,9 @@ $manifest = array(
     'icon'                      => '',
     'is_uninstallable'          => true,
     'name'                      => 'Extends SuiteCRM AOR_Reports',
-    'published_date'            => '2020-Feb-06 17:02',
+    'published_date'            => '2020-Feb-19 14:02',
     'type'                      => 'module',
-    'version'                   => '1.0.0-SNAPSHOT',
+    'version'                   => '1.0.1-SNAPSHOT',
     'remove_tables'             => 'prompt',
 );
 
