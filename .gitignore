@@ -23,3 +23,5 @@ build/*
 nbproject/*
 vendor/*
 .php_cs.cache
+._.DS_Store
+phpdoc-cache-*
