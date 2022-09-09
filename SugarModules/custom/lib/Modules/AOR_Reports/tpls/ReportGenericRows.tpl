@@ -1,3 +1,34 @@
+{if $styles}
+    <style>
+    {literal}
+        .defaultListRowS1:hover td {
+            background: #FAF7CF;
+          }
+        .toggle-label {
+            width: 100%;
+            text-align: center;
+        }
+        .toggle-checkbox {
+          display: none !important;
+        }
+        .toggle-minus{
+            display: none;
+        }
+        .toggle-checkbox:checked + .toggle-label .toggle-minus {
+            display: inline;
+        }
+        .toggle-checkbox:checked + .toggle-label .toggle-plus {
+            display: none;
+        }
+    {/literal}
+    {foreach from=$styles key=selectorName item=styleData}
+        {$selectorName} {ldelim}
+            {$styleData}
+        {rdelim}
+    {/foreach}
+    </style>
+{/if}
+
 {* support rows data *}
 <div class="popupBody">
 {assign var="alt_start" value=$navStrings.start}
@@ -123,7 +154,12 @@
                 {/if}
                 {counter start=0 name="colCounter" print=false assign="colCounter"}
                 {foreach from=$displayFields key=col item=params}
-                    <td scope='row' align='{$params.align|default:'left'}' valign=top class='{$_rowColor}S1' bgcolor='{$_bgColor}'>
+                    {if $rowData.columnClasses && $rowData.columnClasses.$col}
+                        {assign var='_columnColor' value=$rowData.columnClasses.$col}
+                    {else}
+                        {assign var='_columnColor' value=''}
+                    {/if}
+                    <td scope='row' align='{$params.align|default:'left'}' valign=top class='{$_columnColor}' fieldname="{$col}">
                         {if $params.link && !$params.customCode}
 
                             <{$pageData.tag.$id[$params.ACLTag]|default:$pageData.tag.$id.MAIN} href='javascript:void(0)' onclick="send_back('{if $params.dynamic_module}{$rowData[$params.dynamic_module]}{else}{$params.module|default:$pageData.bean.moduleDir}{/if}','{$rowData[$params.id]|default:$rowData.ID}');">{$rowData.$col}</{$pageData.tag.$id[$params.ACLTag]|default:$pageData.tag.$id.MAIN}>

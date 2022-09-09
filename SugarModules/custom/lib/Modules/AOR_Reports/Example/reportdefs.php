@@ -130,6 +130,34 @@ $reports['Example'] = [
         'NAME' => [
             'default' => false, // Выводить в отчёт или нет по-умолчанию. (Для поддержки выбора столбцов, пока не реализовано) По умолчанию `true`
         ],
+        'USERNAME' => [
+            'align' => 'right',
+            'colorize' => [
+                'style' => [
+                    'color' => 'darkorange',
+                ],
+            ],
+        ],
+        'ROLES' => [
+            'colorize' => [
+                'style' => [
+                    'background' => 'darkgray',
+                    'color' => 'contrast',
+                ],
+            ],
+        ],
+        'GROUPS' => [
+
+        ],
+        'DATE_ENTERED' => [
+            'colorize' => [
+                'style' => [
+                    'background' => 'darkgray',
+                    'color' => 'contrast',
+                    'hover' => 'opaque',
+                ],
+            ],
+        ],
     ],
     'fields' => [
         'name' => [

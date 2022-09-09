@@ -3,6 +3,7 @@
 namespace SuiteCRM\Custom\Modules\AOR_Reports;
 
 use SuiteCRM\Custom\Modules\AOR_Reports\AReport;
+use SuiteCRM\Custom\Utility\TableCssGenerator;
 
 /**
  * Класс для формирования вывода отчёта
@@ -87,6 +88,8 @@ class ReportViewSmarty
             ]
         ];
 
+        $styles = TableCssGenerator::getStylizy(TableCssGenerator::TYPE_COLUMN);
+
         $this->th->ss->assign('report', (array) $this->report);
         $this->th->ss->assign('prerow', false); // Support multiselect (MassUpdate) if need. NOT SUPPORTED. FOR FUTURE.
         $this->th->ss->assign('pageData', $pageData);
@@ -96,6 +99,7 @@ class ReportViewSmarty
         $this->th->ss->assign('displayFields', $this->displayFields);
         $this->th->ss->assign('data', $this->displayData);
         $this->th->ss->assign('rowColor', ['oddListRow', 'evenListRow']);
+        $this->th->ss->assign('styles', $styles);
 
         $this->th->ss->assign('includes', isset($this->report->defs['templateMeta']['includes']) ? $this->report->defs['templateMeta']['includes'] : null);
 

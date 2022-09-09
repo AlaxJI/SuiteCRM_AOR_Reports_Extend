@@ -37,6 +37,9 @@ $manifest = [
 
 $installdefs = [
     'id' => 'Extends_SuiteCRM_AOR_Reports',
+    'pre_execute' => [
+        '<basepath>/scripts/pre_execute.php',
+    ],
     'copy' => [
         [
             'from' => '<basepath>/SugarModules/custom/',

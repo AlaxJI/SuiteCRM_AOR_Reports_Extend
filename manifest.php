@@ -35,14 +35,17 @@ $manifest = [
     'icon' => '',
     'is_uninstallable' => true,
     'name' => 'Extends SuiteCRM AOR_Reports',
-    'published_date' => '2022-Sep-07 08:09',
+    'published_date' => '2022-Sep-09 06:09',
     'type' => 'module',
-    'version' => '2.0.1.1-SNAPSHOT',
+    'version' => '2.1.0.5-SNAPSHOT',
     'remove_tables' => 'prompt',
 ];
 
 $installdefs = [
     'id' => 'Extends_SuiteCRM_AOR_Reports',
+    'pre_execute' => [
+        '<basepath>/scripts/pre_execute.php',
+    ],
     'copy' => [
         [
             'from' => '<basepath>/SugarModules/custom/',

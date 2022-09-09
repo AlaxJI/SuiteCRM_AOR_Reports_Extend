@@ -2,6 +2,8 @@
 
 namespace SuiteCRM\Custom\Modules\AOR_Reports;
 
+use SuiteCRM\Custom\Utility\TableCssGenerator;
+
 /**
  * Класс единицы отчёта.
  *
@@ -39,6 +41,27 @@ class ReportData
         }
     }
 
+    public function colorizedColumns($listViewDefs)
+    {
+        foreach ($listViewDefs as $fieldname => $listViewDef) {
+            if ($fieldname === 'colorize' || (empty($listViewDef['colorize']) && empty($listViewDef['conditions']))) {
+                continue;
+            }
+
+            // TODO: Убрать false и добавать обработку строки, когда появится возможность раскрашивать по условию
+            if (false && !empty($listViewDef['conditions'])) {
+                // colorize by conditions
+                // not implemented
+            } elseif (!empty($listViewDef['colorize'])) {
+                // default colorize
+                $cssGenerator = new TableCssGenerator($listViewDef['colorize'], TableCssGenerator::TYPE_COLUMN, $fieldname);
+                $this->field_dom_classes[$fieldname] = ($cssGenerator->getStyleArray())['class'];
+            }
+        }
+
+        return $this;
+    }
+
     public function toArray($filter = [])
     {
         $data = [];
@@ -48,6 +71,8 @@ class ReportData
             }
             $data[strtoupper($key)] = $value;
         }
+
+        $data['columnClasses'] = $this->field_dom_classes;
 
         return $data;
     }

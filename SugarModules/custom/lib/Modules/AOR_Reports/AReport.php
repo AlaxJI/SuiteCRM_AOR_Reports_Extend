@@ -12,6 +12,7 @@
 namespace SuiteCRM\Custom\Modules\AOR_Reports;
 
 use SuiteCRM\Custom\Modules\AOR_Reports\IReport;
+use SuiteCRM\Custom\Utility\Format;
 
 /**
  * Основной класс для формарования отчётов
@@ -119,8 +120,16 @@ abstract class AReport extends \SugarBean implements IReport
             \SugarApplication::redirect('index.php?module=AOR_Reports&action=DetailView&record=' . $this->name);
         }
 
+        $fieldFilter = array_map('strtolower', array_keys($this->defs['listViewDefs']));
+        if (isset($fieldFilter['colorize'])) {
+            unset($fieldFilter['colorize']);
+        }
+        if (isset($fieldFilter['conditions'])) {
+            unset($fieldFilter['conditions']);
+        }
+
         while ($row = $this->db->fetchByAssoc($result)) {
-            $this->processRow($row);
+            $this->processRow($row, $fieldFilter);
         }
 
         return $this;
@@ -204,12 +213,12 @@ abstract class AReport extends \SugarBean implements IReport
         }
         foreach ($reportdefs['fields'] as $field => $fieldDef) {
             $fieldname = strtoupper($fieldDef['name']);
-            if (isset($fieldDef['reportable']) && !parseBool($fieldDef['reportable'])) {
+            if (isset($fieldDef['reportable']) && !Format::toBool($fieldDef['reportable'])) {
                 continue;
             }
             $listViewDef = [
                 'label' => isset($fieldDef['vname']) ? $fieldDef['vname'] : 'LBL_' . $fieldname,
-                'link' => isset($fieldDef['link']) ? parseBool($fieldDef['link']) : false,
+                'link' => isset($fieldDef['link']) ? Format::toBool($fieldDef['link']) : false,
                 'default' => true,
             ];
 
@@ -236,7 +245,7 @@ abstract class AReport extends \SugarBean implements IReport
         $whereArray = [];
         $whereAndArray = [];
         foreach ($this->defs['searchFields'] as $key => $searchDef) {
-            if (isset($searchDef['skip']) && parseBool($searchDef['skip'])) {
+            if (isset($searchDef['skip']) && Format::toBool($searchDef['skip'])) {
                 continue;
             }
             $fieldname = $key;
@@ -355,6 +364,8 @@ abstract class AReport extends \SugarBean implements IReport
         $reportData->parseRow($row);
 
         $this->afterParseRow($reportData);
+
+        $reportData->colorizedColumns($this->defs['listViewDefs']);
 
         $this->dataList[] = $reportData->toArray($fieldFilter);
         $this->dataReports[] = $reportData;
